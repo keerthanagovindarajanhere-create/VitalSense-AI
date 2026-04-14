@@ -33,7 +33,6 @@ st.markdown("<h1>🩺 VitalSense AI</h1>", unsafe_allow_html=True)
 st.markdown("<h3 style='text-align: center;'>AI-Powered Diabetes Risk Prediction</h3>", unsafe_allow_html=True)
 st.markdown("<br>", unsafe_allow_html=True)
 st.markdown("---")
-st.markdown("---")
 st.write("### 🧠 AI-powered Diabetes Risk Assessment")
 
 # Mode selection
