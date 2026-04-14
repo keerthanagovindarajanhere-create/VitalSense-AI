@@ -3,19 +3,44 @@ import pickle
 import numpy as np
 import pandas as pd
 
+st.markdown("""
+<style>
+.main {
+    background-color: #f5f7fa;
+}
+h1 {
+    color: #2c3e50;
+    text-align: center;
+}
+h2, h3 {
+    color: #34495e;
+}
+.stButton>button {
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 8px;
+    height: 3em;
+    width: 100%;
+}
+</style>
+""", unsafe_allow_html=True)
+
 # Load model
 with open("model.pkl", "rb") as f:
     model = pickle.load(f)
 
-st.title("VitalSense AI 🩺")
-st.subheader("Diabetes Risk Prediction")
-
+st.markdown("<h1>🩺 VitalSense AI</h1>", unsafe_allow_html=True)
+st.markdown("<h3 style='text-align: center;'>AI-Powered Diabetes Risk Prediction</h3>", unsafe_allow_html=True)
+st.markdown("<br>", unsafe_allow_html=True)
+st.markdown("---")
 st.markdown("---")
 st.write("### 🧠 AI-powered Diabetes Risk Assessment")
 
 # Mode selection
 mode = st.radio("Select Mode", ["Clinical Mode", "Quick Check (User)"])
-
+st.sidebar.markdown("## 🧪 Clinical Inputs")
+st.sidebar.markdown("Adjust values based on patient data")
+st.sidebar.markdown("---")
 # ------------------ CLINICAL MODE ------------------
 if mode == "Clinical Mode":
     st.info("""
@@ -40,11 +65,19 @@ if mode == "Clinical Mode":
         prob = model.predict_proba(data)[0][1]
 
         if prediction == 1:
-            st.error("⚠️ High Risk Detected")
-            st.metric("Risk Probability", f"{prob*100:.2f}%")
+            st.markdown(f"""
+            <div style="background-color:#ffe6e6;padding:20px;border-radius:10px">
+            <h3 style="color:red;">⚠️ High Risk Detected</h3>
+            <p><b>Probability:</b> {prob*100:.2f}%</p>
+            </div>
+            """, unsafe_allow_html=True)
         else:
-            st.success("✅ Low Risk")
-            st.metric("Risk Probability", f"{prob*100:.2f}%")
+            st.markdown(f"""
+            <div style="background-color:#e6ffe6;padding:20px;border-radius:10px">
+            <h3 style="color:green;">✅ Low Risk</h3>
+            <p><b>Probability:</b> {prob*100:.2f}%</p>
+            </div>
+            """, unsafe_allow_html=True)
 
         # Feature importance
         feature_names = ["Pregnancies", "Glucose", "BloodPressure", "SkinThickness",
@@ -112,5 +145,5 @@ else:
             st.write(f"• {f} influenced the prediction")
 
 # Footer
-st.markdown("---")
+
 st.caption("⚠️ This tool is for educational purposes only. Consult a doctor for medical advice.")
